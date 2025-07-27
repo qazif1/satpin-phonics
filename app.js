@@ -64,7 +64,21 @@ function playSounds() {
   }
   playNext();
 }
+function playSounds() {
+  const letters = currentWord.split("");
+  let i = 0;
 
+  function playNext() {
+    if (i < letters.length) {
+      const audio = new Audio(`sound_${letters[i]}.mp3`);
+      audio.play();
+      i++;
+      setTimeout(playNext, 1200); // Delay between each letter
+    }
+  }
+
+  setTimeout(playNext, 500); // Initial delay before the first letter plays
+}
 // Show letters and play letter sounds
 function breakdownLetters() {
   const container = document.getElementById("wordContainer");
@@ -107,14 +121,13 @@ function showImageAndSentence() {
   document.getElementById("sentence").style.display = "block";
 
   const image = document.getElementById("wordImage");
-  image.src = `${currentWord}.png`;
+  image.src = `${currentWord}-min.png`; // Load the correct -min.png file
   image.style.display = "block";
   image.style.opacity = "0";
   setTimeout(() => {
     image.style.opacity = "1";
   }, 50);
 }
-
 // Move to next word
 function nextWord() {
   currentIndex++;
